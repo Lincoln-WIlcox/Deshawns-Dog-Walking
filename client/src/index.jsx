@@ -4,14 +4,18 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import reportWebVitals from "./reportWebVitals";
-import Home from "./Home";
+import Dogs from "./Dogs";
+import Walkers from "./Walkers";
+import Cities from "./Cities";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<App />}>
-        <Route index element={<Home />} />
+        <Route index element={<Dogs />} />
+        <Route path="/walkers" element={<Walkers />} />
+        <Route path="/cities" element={<Cities />} />
       </Route>
     </Routes>
   </BrowserRouter>,

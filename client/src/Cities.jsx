@@ -1,18 +1,23 @@
-import { getGreeting } from "./apiManager";
+import { getCities, getGreeting } from "./apiManager";
 import { useEffect, useState } from "react";
 
-export default function Home() {
+const Cities = () => 
+{
   const [greeting, setGreeting] = useState({
     message: "Not Connected to the API",
   });
 
-  useEffect(() => {
-    getGreeting()
+  useEffect(() =>
+  {
+    getCities()
       .then(setGreeting)
-      .catch(() => {
+      .catch(() =>
+      {
         console.log("API not connected");
       });
   }, []);
 
   return <p>{greeting.message}</p>;
 }
+
+export default Cities

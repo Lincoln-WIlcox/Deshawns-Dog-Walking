@@ -16,10 +16,28 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/api/hello", () =>
-{
-    return new { Message = "Welcome to DeShawn's Dog Walking" };
-});
+app.MapGet(
+    "/api/hello",
+    () =>
+    {
+        return new { Message = "Welcome to DeShawn's Dog Walking" };
+    }
+);
 
+app.MapGet(
+    "/api/walkers",
+    () =>
+    {
+        return new { Message = "Walkers" };
+    }
+);
+
+app.MapGet(
+    "/api/cities",
+    () =>
+    {
+        return new { Message = "Cities" };
+    }
+);
 
 app.Run();
