@@ -1,4 +1,4 @@
-import { getCities, getGreeting } from "./apiManager";
+import { getCities } from "./apiManager";
 import { useEffect, useState } from "react";
 
 const Cities = () => 

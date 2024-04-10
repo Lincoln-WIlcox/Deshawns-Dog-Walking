@@ -1,6 +1,6 @@
-export const getGreeting = async () =>
+export const getDogs = async () =>
 {
-  const response = await fetch("/api/hello")
+  const response = await fetch("/api/dogs")
   return response.json()
 }
 

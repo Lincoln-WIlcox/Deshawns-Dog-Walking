@@ -16,11 +16,38 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+List<Dog> dogs = new List<Dog>
+{
+    new Dog
+    {
+        Id = 1,
+        Name = "Bailey",
+        WalkerId = 1,
+        CityId = 1
+    },
+    new Dog
+    {
+        Id = 2,
+        Name = "Max",
+        WalkerId = 2,
+        CityId = 2
+    }
+};
+
 app.MapGet(
-    "/api/hello",
+    "/api/dogs",
     () =>
     {
-        return new { Message = "Welcome to DeShawn's Dog Walking" };
+        return dogs.Select(
+            (dog) =>
+                new DogDTO
+                {
+                    Id = dog.Id,
+                    Name = dog.Name,
+                    WalkerId = dog.WalkerId,
+                    CityId = dog.CityId
+                }
+        );
     }
 );
 
