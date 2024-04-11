@@ -27,13 +27,13 @@ const DogForm = ({ onDogSubmitted }) =>
             }
 
             addDog(dog).then(onDogSubmitted)
+
+            setName("")
+            setCityId(0)
         } else
         {
             window.alert("dog form is not filled")
         }
-
-        setName("")
-        setCityId(0)
     }
 
     const dogIsValid = () =>

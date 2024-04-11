@@ -1,5 +1,5 @@
 import DogForm from "./DogForm";
-import { getDogs } from "./apiManager";
+import { deleteDog, getDogs } from "./apiManager";
 import { useEffect, useState } from "react";
 import Popup from 'reactjs-popup';
 
@@ -22,6 +22,11 @@ const Dogs = () =>
     fetchAndSetDogs()
   }, []);
 
+  const onDeleteClicked = (dogId) =>
+  {
+    deleteDog(dogId).then(fetchAndSetDogs)
+  }
+
   return <div>
     <DogForm onDogSubmitted={fetchAndSetDogs} />
     {
@@ -34,6 +39,7 @@ const Dogs = () =>
               position="right center">
               <div>lives in {dog.city.name}</div>
               <div>{dog.walker ? `walked by ${dog.walker.name}` : 'no walker assigned'}</div>
+              <button onClick={(event) => { onDeleteClicked(dog.id) }}>delete</button>
             </Popup>
           </div>
       )

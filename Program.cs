@@ -200,4 +200,21 @@ app.MapPost(
     }
 );
 
+app.MapDelete(
+    "/api/dogs/{id}",
+    (int id) =>
+    {
+        Dog dog = dogs.FirstOrDefault(dog => dog.Id == id);
+
+        if (dog == null)
+        {
+            return Results.BadRequest();
+        }
+
+        dogs.RemoveAt(dogs.IndexOf(dog));
+
+        return Results.Ok();
+    }
+);
+
 app.Run();

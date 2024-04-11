@@ -39,3 +39,12 @@ export const addCity = (city) =>
     }
   ).then(res => res.json())
 }
+
+export const deleteDog = (dogId) =>
+{
+  return fetch(`/api/dogs/${dogId}`,
+    {
+      method: "DELETE"
+    }
+  )
+}
