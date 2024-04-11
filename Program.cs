@@ -137,7 +137,7 @@ app.MapGet(
 );
 
 app.MapPost(
-    "/api/dog",
+    "/api/dogs",
     (Dog dog) =>
     {
         City city = cities.FirstOrDefault(city => city.Id == dog.CityId);
@@ -167,6 +167,28 @@ app.MapPost(
                 WalkerId = dog.WalkerId,
                 CityId = dog.CityId
             }
+        );
+    }
+);
+
+app.MapPost(
+    "/api/cities",
+    (City city) =>
+    {
+        if (cities.Count > 0)
+        {
+            city.Id = cities.Max(dog => dog.Id) + 1;
+        }
+        else
+        {
+            city.Id = 1;
+        }
+
+        cities.Add(city);
+
+        return Results.Created(
+            $"/api/cities/{city.Id}",
+            new CityDTO { Id = city.Id, Name = city.Name }
         );
     }
 );

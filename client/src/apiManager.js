@@ -20,11 +20,22 @@ export const getWalkersByCity = (cityId) =>
 
 export const addDog = (dog) =>
 {
-  return fetch("/api/dog",
+  return fetch("/api/dogs",
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dog)
+    }
+  ).then(res => res.json())
+}
+
+export const addCity = (city) =>
+{
+  return fetch("/api/cities",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(city)
     }
   ).then(res => res.json())
 }
