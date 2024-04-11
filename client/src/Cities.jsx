@@ -1,3 +1,4 @@
+import CityForm from "./CityForm";
 import { getCities } from "./apiManager";
 import { useEffect, useState } from "react";
 
@@ -16,6 +17,7 @@ const Cities = () =>
   }, []);
 
   return <div>
+    <CityForm />
     {
       cities.map(
         (city) =>
