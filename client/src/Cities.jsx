@@ -6,7 +6,7 @@ const Cities = () =>
 {
   const [cities, setCities] = useState([]);
 
-  useEffect(() =>
+  const fetchAndSetCities = () =>
   {
     getCities()
       .then(setCities)
@@ -14,10 +14,15 @@ const Cities = () =>
       {
         console.log("API not connected");
       });
+  }
+
+  useEffect(() =>
+  {
+    fetchAndSetCities()
   }, []);
 
   return <div>
-    <CityForm />
+    <CityForm onCityAdded={fetchAndSetCities} />
     {
       cities.map(
         (city) =>
