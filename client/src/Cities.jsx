@@ -1,23 +1,35 @@
+import CityForm from "./CityForm";
 import { getCities } from "./apiManager";
 import { useEffect, useState } from "react";
 
 const Cities = () => 
 {
-  const [greeting, setGreeting] = useState({
-    message: "Not Connected to the API",
-  });
+  const [cities, setCities] = useState([]);
 
-  useEffect(() =>
+  const fetchAndSetCities = () =>
   {
     getCities()
-      .then(setGreeting)
+      .then(setCities)
       .catch(() =>
       {
         console.log("API not connected");
       });
+  }
+
+  useEffect(() =>
+  {
+    fetchAndSetCities()
   }, []);
 
-  return <p>{greeting.message}</p>;
+  return <div>
+    <CityForm onCityAdded={fetchAndSetCities} />
+    {
+      cities.map(
+        (city) =>
+          <p>{city.name}</p>
+      )
+    }
+  </div>;
 }
 
 export default Cities
