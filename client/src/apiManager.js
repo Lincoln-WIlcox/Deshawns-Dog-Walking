@@ -1,17 +1,25 @@
 export const getDogs = async () =>
 {
-  const response = await fetch("/api/dogs")
-  return response.json()
+  return fetch("/api/dogs").then(res => res.json())
 }
 
-export const getWalkers = async () =>
+export const getWalkers = () =>
 {
-  const response = await fetch("/api/walkers")
-  return response.json()
+  return fetch("/api/walkers").then(res => res.json())
 }
 
-export const getCities = async () =>
+export const getCities = () =>
 {
-  const response = await fetch("/api/cities")
-  return response.json()
+  return fetch("/api/cities").then(res => res.json())
+}
+
+export const addDog = (dog) =>
+{
+  return fetch("/api/dog",
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dog)
+    }
+  ).then(res => res.json())
 }
