@@ -1,5 +1,5 @@
 import DogForm from "./DogForm";
-import { getDogs } from "./apiManager";
+import { deleteDog, getDogs } from "./apiManager";
 import { useEffect, useState } from "react";
 import Popup from 'reactjs-popup';
 
@@ -24,7 +24,7 @@ const Dogs = () =>
 
   const onDeleteClicked = (dogId) =>
   {
-    console.log("deleting " + dogId)
+    deleteDog(dogId).then(fetchAndSetDogs)
   }
 
   return <div>

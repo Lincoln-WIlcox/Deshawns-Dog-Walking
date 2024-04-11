@@ -46,5 +46,5 @@ export const deleteDog = (dogId) =>
     {
       method: "DELETE"
     }
-  ).then(res => res.json())
+  )
 }
