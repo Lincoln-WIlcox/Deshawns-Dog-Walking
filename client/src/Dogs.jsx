@@ -1,3 +1,4 @@
+import DogForm from "./DogForm";
 import { getDogs } from "./apiManager";
 import { useEffect, useState } from "react";
 
@@ -5,7 +6,7 @@ const Dogs = () =>
 {
   const [dogs, setDogs] = useState([]);
 
-  useEffect(() =>
+  const fetchAndSetDogs = () =>
   {
     getDogs()
       .then(setDogs)
@@ -13,9 +14,15 @@ const Dogs = () =>
       {
         console.log("API not connected");
       });
+  }
+
+  useEffect(() =>
+  {
+    fetchAndSetDogs()
   }, []);
 
   return <div>
+    <DogForm onDogSubmitted={fetchAndSetDogs} />
     {
       dogs.map(
         dog =>
