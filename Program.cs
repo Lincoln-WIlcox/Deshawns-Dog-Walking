@@ -90,7 +90,7 @@ app.MapGet(
     "/api/walkers",
     () =>
     {
-        return new { Message = "Walkers" };
+        return walkers.Select((walker) => new WalkerDTO { Id = walker.Id, Name = walker.Name, });
     }
 );
 
@@ -98,18 +98,17 @@ app.MapGet(
     "/api/cities",
     () =>
     {
-        return new { Message = "Cities" };
+        return cities.Select((city) => new CityDTO { Id = city.Id, Name = city.Name });
     }
 );
 
 app.MapPost(
-    "/api/dogs",
+    "/api/dog",
     (Dog dog) =>
     {
-        Walker walker = walkers.FirstOrDefault(walker => walker.Id == dog.WalkerId);
         City city = cities.FirstOrDefault(city => city.Id == dog.CityId);
 
-        if (walker == null || city == null)
+        if (city == null)
         {
             return Results.BadRequest();
         }
