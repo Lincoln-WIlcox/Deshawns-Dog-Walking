@@ -4,4 +4,6 @@ class DogDTO
     public string Name { get; set; }
     public int WalkerId { get; set; }
     public int CityId { get; set; }
+    public CityDTO City { get; set; }
+    public WalkerDTO Walker { get; set; }
 }

@@ -75,13 +75,20 @@ app.MapGet(
     {
         return dogs.Select(
             (dog) =>
-                new DogDTO
+            {
+                City city = cities.FirstOrDefault(city => city.Id == dog.CityId);
+                Walker walker = walkers.FirstOrDefault(walker => walker.Id == dog.WalkerId);
+                return new DogDTO
                 {
                     Id = dog.Id,
                     Name = dog.Name,
                     WalkerId = dog.WalkerId,
-                    CityId = dog.CityId
-                }
+                    CityId = dog.CityId,
+                    City = new CityDTO { Id = city.Id, Name = city.Name },
+                    Walker =
+                        walker != null ? new WalkerDTO { Id = walker.Id, Name = walker.Name } : null
+                };
+            }
         );
     }
 );
