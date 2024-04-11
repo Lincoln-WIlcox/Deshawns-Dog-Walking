@@ -43,8 +43,8 @@ List<Walker> walkers = new List<Walker>
 
 List<City> cities = new List<City>
 {
-    new City { Id = 1, Name = "walker 1" },
-    new City { Id = 2, Name = "walker 2" }
+    new City { Id = 1, Name = "city 1" },
+    new City { Id = 2, Name = "city 2" }
 };
 
 List<CityWalker> cityWalkers = new List<CityWalker>
@@ -57,14 +57,14 @@ List<CityWalker> cityWalkers = new List<CityWalker>
     },
     new CityWalker
     {
-        Id = 1,
+        Id = 2,
         WalkerId = 2,
         CityId = 2,
     },
     new CityWalker
     {
-        Id = 1,
-        WalkerId = 1,
+        Id = 3,
+        WalkerId = 3,
         CityId = 2,
     }
 };
@@ -88,9 +88,30 @@ app.MapGet(
 
 app.MapGet(
     "/api/walkers",
-    () =>
+    (int? cityId) =>
     {
-        return walkers.Select((walker) => new WalkerDTO { Id = walker.Id, Name = walker.Name, });
+        List<Walker> returnWalkers = walkers;
+
+        if (cityId != null)
+        {
+            City city = cities.FirstOrDefault(city => city.Id == cityId);
+            if (city == null)
+            {
+                return Results.BadRequest();
+            }
+
+            returnWalkers = cityWalkers
+                .Where(cityWalker => cityWalker.CityId == cityId)
+                .Select(cityWalker =>
+                    walkers.FirstOrDefault(walker => walker.Id == cityWalker.WalkerId)
+                )
+                .Distinct()
+                .ToList();
+        }
+
+        return Results.Ok(
+            returnWalkers.Select(walker => new WalkerDTO { Id = walker.Id, Name = walker.Name, })
+        );
     }
 );
 
@@ -98,7 +119,20 @@ app.MapGet(
     "/api/cities",
     () =>
     {
-        return cities.Select((city) => new CityDTO { Id = city.Id, Name = city.Name });
+        return cities.Select(city => new CityDTO { Id = city.Id, Name = city.Name });
+    }
+);
+
+app.MapGet(
+    "/api/cityWalkers",
+    () =>
+    {
+        return cityWalkers.Select(cityWalker => new CityWalkerDTO
+        {
+            Id = cityWalker.Id,
+            CityId = cityWalker.CityId,
+            WalkerId = cityWalker.WalkerId
+        });
     }
 );
 

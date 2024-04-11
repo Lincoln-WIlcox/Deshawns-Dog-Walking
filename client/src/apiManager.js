@@ -13,6 +13,11 @@ export const getCities = () =>
   return fetch("/api/cities").then(res => res.json())
 }
 
+export const getWalkersByCity = (cityId) =>
+{
+  return fetch(`/api/walkers?cityId=${cityId}`).then(res => res.json())
+}
+
 export const addDog = (dog) =>
 {
   return fetch("/api/dog",
