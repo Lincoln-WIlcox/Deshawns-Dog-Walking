@@ -1,6 +1,6 @@
 import Popup from "reactjs-popup";
 import WalkerDetails from "./WalkerDetails";
-import { getCities, getWalkers, getWalkersByCity } from "./apiManager";
+import { getCities, getDogs, getWalkers, getWalkersByCity, putDog } from "./apiManager";
 import { Fragment, useEffect, useState } from "react";
 
 const Walkers = () =>
@@ -9,6 +9,7 @@ const Walkers = () =>
   const [filteredWalkers, setFilteredWalkers] = useState([])
   const [cities, setCities] = useState([])
   const [filterCityId, setFilterCityId] = useState(0)
+  const [dogs, setDogs] = useState([])
 
   const fetchAndSetWalkers = () =>
   {
@@ -20,12 +21,17 @@ const Walkers = () =>
       })
   }
 
+  const fetchAndSetDogs = () =>
+  {
+    getDogs().then(setDogs)
+  }
+
   useEffect(
     () =>
     {
       fetchAndSetWalkers()
-      getCities()
-        .then(setCities)
+      getCities().then(setCities)
+      fetchAndSetDogs()
     }, [])
 
   useEffect(
@@ -42,6 +48,12 @@ const Walkers = () =>
       }
     }, [filterCityId, allWalkers]
   )
+
+  const onAddingDog = (walkerId, dog) =>
+  {
+    dog.walkerId = walkerId
+    putDog(dog).then(fetchAndSetDogs)
+  }
 
   return <div>
     <div>
@@ -62,10 +74,23 @@ const Walkers = () =>
         (walker) =>
           <Fragment key={walker.id}>
             <p key={"walker" + walker.id}>{walker.name}</p>
-            <Popup trigger=
-              {<button> view details </button>}
+            <div>
+              <Popup trigger=
+                {<button> view details </button>}
+                position="right center">
+                <WalkerDetails walker={walker} onWalkersChanged={fetchAndSetWalkers} />
+              </Popup>
+            </div>
+
+            <Popup
+              trigger={<button> add dog </button>}
               position="right center">
-              <WalkerDetails walker={walker} onWalkersChanged={fetchAndSetWalkers} />
+              {
+                dogs.filter(dog => dog.walkerId != walker.id && walker.cities.find(city => city.Id == dog.CityId)).
+                  map(dog =>
+                    <button onClick={() => onAddingDog(walker.id, dog)} >{dog.name}</button>
+                  )
+              }
             </Popup>
           </Fragment>
       )
