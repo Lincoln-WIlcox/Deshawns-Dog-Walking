@@ -64,3 +64,12 @@ export const deleteDog = (dogId) =>
     }
   )
 }
+
+export const deleteWalker = (walkerId) =>
+{
+  return fetch(`/api/walkers/${walkerId}`,
+    {
+      method: "DELETE"
+    }
+  )
+}

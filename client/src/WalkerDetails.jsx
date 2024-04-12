@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react"
-import { getCities, getCitiesByWalker, putWalkerCities } from "./apiManager"
+import { deleteWalker, getCities, getCitiesByWalker, putWalkerCities } from "./apiManager"
 
-const WalkerDetails = ({ walker }) =>
+const WalkerDetails = ({ walker, onWalkersChanged }) =>
 {
     const [cities, setCities] = useState([])
     const [selectedCities, setSelectedCities] = useState([])
@@ -37,7 +37,12 @@ const WalkerDetails = ({ walker }) =>
     const onUpdateClicked = () =>
     {
         walker.cities = selectedCities
-        putWalkerCities(walker)
+        putWalkerCities(walker).then(onWalkersChanged)
+    }
+
+    const onDeleteClicked = () =>
+    {
+        deleteWalker(walker.id).then(onWalkersChanged)
     }
 
     return <div>
@@ -51,6 +56,7 @@ const WalkerDetails = ({ walker }) =>
             )
         }
         <button onClick={onUpdateClicked}>Update</button>
+        <button onClick={onDeleteClicked}>Delete</button>
     </div>
 }
 

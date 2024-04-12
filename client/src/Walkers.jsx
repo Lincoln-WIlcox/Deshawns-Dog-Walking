@@ -10,15 +10,20 @@ const Walkers = () =>
   const [cities, setCities] = useState([])
   const [filterCityId, setFilterCityId] = useState(0)
 
+  const fetchAndSetWalkers = () =>
+  {
+    getWalkers()
+      .then(setAllWalkers)
+      .catch(() =>
+      {
+        console.log("API not connected")
+      })
+  }
+
   useEffect(
     () =>
     {
-      getWalkers()
-        .then(setAllWalkers)
-        .catch(() =>
-        {
-          console.log("API not connected")
-        })
+      fetchAndSetWalkers()
       getCities()
         .then(setCities)
     }, [])
@@ -60,7 +65,7 @@ const Walkers = () =>
             <Popup trigger=
               {<button> view details </button>}
               position="right center">
-              <WalkerDetails walker={walker} />
+              <WalkerDetails walker={walker} onWalkersChanged={fetchAndSetWalkers} />
             </Popup>
           </Fragment>
       )
