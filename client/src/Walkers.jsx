@@ -1,5 +1,7 @@
+import Popup from "reactjs-popup";
+import WalkerDetails from "./WalkerDetails";
 import { getCities, getWalkers, getWalkersByCity } from "./apiManager";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 
 const Walkers = () =>
 {
@@ -53,7 +55,14 @@ const Walkers = () =>
     {
       filteredWalkers.map(
         (walker) =>
-          <p key={"walker" + walker.id}>{walker.name}</p>
+          <Fragment key={walker.id}>
+            <p key={"walker" + walker.id}>{walker.name}</p>
+            <Popup trigger=
+              {<button> view details </button>}
+              position="right center">
+              <WalkerDetails walker={walker} />
+            </Popup>
+          </Fragment>
       )
     }
   </div>;
