@@ -18,6 +18,11 @@ export const getWalkersByCity = (cityId) =>
   return fetch(`/api/walkers?cityId=${cityId}`).then(res => res.json())
 }
 
+export const getCitiesByWalker = (walkerId) =>
+{
+  return fetch(`/api/cities?walkerId=${walkerId}`).then(res => res.json())
+}
+
 export const addDog = (dog) =>
 {
   return fetch("/api/dogs",
@@ -38,6 +43,17 @@ export const addCity = (city) =>
       body: JSON.stringify(city)
     }
   ).then(res => res.json())
+}
+
+export const putWalkerCities = (walker) =>
+{
+  fetch(`/api/walkers/${walker.id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(walker)
+    }
+  )
 }
 
 export const deleteDog = (dogId) =>
