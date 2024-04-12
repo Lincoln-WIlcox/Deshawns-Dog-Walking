@@ -254,4 +254,21 @@ app.MapDelete(
     }
 );
 
+app.MapDelete(
+    "/api/walkers/{id}",
+    (int id) =>
+    {
+        Walker walker = walkers.FirstOrDefault(walker => walker.Id == id);
+
+        if (walker == null)
+        {
+            return Results.BadRequest();
+        }
+
+        walkers.Remove(walker);
+
+        return Results.Ok();
+    }
+);
+
 app.Run();
