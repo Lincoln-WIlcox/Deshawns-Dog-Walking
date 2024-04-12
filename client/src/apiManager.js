@@ -45,6 +45,17 @@ export const addCity = (city) =>
   ).then(res => res.json())
 }
 
+export const putDog = (dog) =>
+{
+  return fetch(`/api/dogs/${dog.id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dog)
+    }
+  )
+}
+
 export const putWalkerCities = (walker) =>
 {
   fetch(`/api/walkers/${walker.id}`,
